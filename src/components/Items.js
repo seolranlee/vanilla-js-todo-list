@@ -15,18 +15,15 @@ export default class Items extends Component {
 	}
 	// 불편함 1. render를 실행할 때 마다 이벤트가 새로 등록된다
 	setEvent() {
-		// 이벤트 버블링으로 처리
-		this.$target.addEventListener('click', ({ target }) => {
+		// addEvent: 이벤트 버블링 추상화
+		this.addEvent('click', '.addBtn', () => {
+			const { items } = this.$state;
+			this.setState({ items: [...items, `item${items.length + 1}`] });
+		});
+		this.addEvent('click', '.deleteBtn', ({ target }) => {
 			const items = [...this.$state.items];
-
-			if (target.classList.contains('addBtn')) {
-				this.setState({ items: [...items, `item${items.length + 1}`] });
-			}
-
-			if (target.classList.contains('deleteBtn')) {
-				items.splice(target.dataset.index, 1);
-				this.setState({ items });
-			}
+			items.splice(target.dataset.index, 1);
+			this.setState({ items });
 		});
 	}
 }
