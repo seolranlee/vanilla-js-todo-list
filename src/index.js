@@ -1,5 +1,6 @@
 import './style/index.css';
-import Button from './components/Button/index';
+import TodoItem from './components/TodoItem/index';
+// import Button from './components/Button/index';
 
 const dummy = [
 	{
@@ -1205,10 +1206,14 @@ const dummy = [
 ];
 
 const app = document.getElementById('app');
-const buttonList = [];
+const todoList = [];
+// const buttonList = [];
 
 dummy.forEach((todo, index) => {
-	buttonList.push(new Button({ text: `button-${index}`, index }));
-	app.insertAdjacentHTML('beforebegin', buttonList[index].render());
-	buttonList[index].mounted();
+	todoList.push(new TodoItem({ id: todo.id, title: todo.title, completed: todo.completed }));
+	// buttonList.push(new Button({ text: `button-${index}`, index }));
+	app.insertAdjacentHTML('beforebegin', todoList[index].render());
+	// app.insertAdjacentHTML('beforebegin', buttonList[index].render());
+	todoList[index].mounted();
+	// buttonList[index].mounted();
 });
