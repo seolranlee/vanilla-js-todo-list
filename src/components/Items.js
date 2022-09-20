@@ -15,20 +15,18 @@ export default class Items extends Component {
 	}
 	// 불편함 1. render를 실행할 때 마다 이벤트가 새로 등록된다
 	setEvent() {
-		// 추가
-		this.$target.querySelector('.addBtn').addEventListener('click', () => {
-			const { items } = this.$state;
-			this.setState({ items: [...items, `item${items.length + 1}`] });
-		});
+		// 이벤트 버블링으로 처리
+		this.$target.addEventListener('click', ({ target }) => {
+			const items = [...this.$state.items];
 
-		// 삭제
-		// 불편함 2. 반복적인 요소에 대해 각각 이벤트를 등록해야 한다
-		this.$target.querySelectorAll('.deleteBtn').forEach(deleteBtn =>
-			deleteBtn.addEventListener('click', ({ target }) => {
-				const items = [...this.$state.items];
+			if (target.classList.contains('addBtn')) {
+				this.setState({ items: [...items, `item${items.length + 1}`] });
+			}
+
+			if (target.classList.contains('deleteBtn')) {
 				items.splice(target.dataset.index, 1);
 				this.setState({ items });
-			})
-		);
+			}
+		});
 	}
 }

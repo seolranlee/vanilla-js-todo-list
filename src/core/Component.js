@@ -4,6 +4,7 @@ export default class Component {
 	constructor($target) {
 		this.$target = $target;
 		this.setup();
+		this.setEvent(); // constructor에서 한 번만 실행한다.
 		this.render();
 	}
 	setup() {}
@@ -12,7 +13,6 @@ export default class Component {
 	}
 	render() {
 		this.$target.innerHTML = this.template();
-		this.setEvent();
 	}
 	setEvent() {}
 	setState(newState) {
